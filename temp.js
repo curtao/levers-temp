@@ -138,7 +138,7 @@ const titleTimeline = gsap.timeline({
     trigger: "#grid-section",
     start: "top center",
     onEnter: () => {
-      titleTimeline.to("#grid-title-1, #grid-title-2, #grid-title-3", { y: 0, opacity: 1, duration: 0.5, stagger: 0.1 });
+      titleTimeline.to("#grid-title-1, #grid-title-2, #grid-title-3", { y: 0, opacity: 1, duration: 1, stagger: 0.3 });
     }
   }
 });
