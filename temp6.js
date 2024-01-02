@@ -252,7 +252,7 @@ const sectionHeight = window.innerHeight; // Assuming each 100vh section height
 // Trigger click on Tab 1 link when in the first 100vh segment
 ScrollTrigger.create({
   trigger: "#tab-section-wrapper",
-  start: `top bottom`,
+  start: "top bottom",
   end: `${sectionHeight} top`,
   onEnter: () => document.querySelector("#tab-link-1").click(),
   onEnterBack: () => document.querySelector("#tab-link-1").click()
@@ -268,13 +268,15 @@ ScrollTrigger.create({
 });
 
 // Trigger click on Tab 3 link when in the third 100vh segment
+// Adjust the end value to add 100vh offset
 ScrollTrigger.create({
   trigger: "#tab-section-wrapper",
   start: `${2 * sectionHeight} top`,
-  end: `${3 * sectionHeight} top`,
+  end: `${4 * sectionHeight} top`, // Extend the end by an extra 100vh
   onEnter: () => document.querySelector("#tab-link-3").click(),
   onEnterBack: () => document.querySelector("#tab-link-3").click()
 });
+
 // Set initial states for tab items including new items
 gsap.set(["#tab-1-item-0", "#tab-1-item-1", "#tab-1-item-2", "#tab-2-item-0", "#tab-2-item-1", "#tab-2-item-2", "#tab-3-item-0", "#tab-3-item-1", "#tab-3-item-2"], 
   { y: '100%', opacity: 0 });
