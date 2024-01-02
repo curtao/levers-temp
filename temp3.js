@@ -253,80 +253,53 @@ if (window.location.pathname === '/') {
     return window.innerHeight;
   }
 
+  // Store the ScrollTrigger instances
+  const tabTriggers = [
+    gsap.to("#tab-link-1", { 
+      scrollTrigger: {
+        trigger: "#tab-section-wrapper",
+        start: "top bottom",
+        end: `${getSectionHeight()} top`,
+        onEnter: () => document.querySelector("#tab-link-1").click(),
+        onEnterBack: () => document.querySelector("#tab-link-1").click()
+      }
+    }),
+    gsap.to("#tab-link-2", { 
+      scrollTrigger: {
+        trigger: "#tab-section-wrapper",
+        start: `${getSectionHeight()} top`,
+        end: `${2 * getSectionHeight()} top`,
+        onEnter: () => document.querySelector("#tab-link-2").click(),
+        onEnterBack: () => document.querySelector("#tab-link-2").click()
+      }
+    }),
+    gsap.to("#tab-link-3", { 
+      scrollTrigger: {
+        trigger: "#tab-section-wrapper",
+        start: `${2 * getSectionHeight()} top`,
+        end: `${3 * getSectionHeight()} top`,
+        onEnter: () => document.querySelector("#tab-link-3").click(),
+        onEnterBack: () => document.querySelector("#tab-link-3").click()
+      }
+    })
+  ];
+
   // Function to update the ScrollTrigger instances
   function updateTabTriggers() {
     const sectionHeight = getSectionHeight();
 
     // Update the trigger points for each tab
     tabTriggers.forEach((trigger, index) => {
-      trigger.scrollTrigger.start = `${index * sectionHeight} top`;
-      trigger.scrollTrigger.end = `${(index + 1) * sectionHeight} top`;
-      trigger.scrollTrigger.refresh();
+      if (trigger && trigger.scrollTrigger) {
+        trigger.scrollTrigger.start = `${index * sectionHeight} top`;
+        trigger.scrollTrigger.end = `${(index + 1) * sectionHeight} top`;
+        trigger.scrollTrigger.refresh();
+      }
     });
   }
-
-  // Store the ScrollTrigger instances
-  const tabTriggers = [
-    ScrollTrigger.create({
-      trigger: "#tab-section-wrapper",
-      start: "top bottom",
-      end: `${getSectionHeight()} top`,
-      onEnter: () => document.querySelector("#tab-link-1").click(),
-      onEnterBack: () => document.querySelector("#tab-link-1").click()
-    }),
-    ScrollTrigger.create({
-      trigger: "#tab-section-wrapper",
-      start: `${getSectionHeight()} top`,
-      end: `${2 * getSectionHeight()} top`,
-      onEnter: () => document.querySelector("#tab-link-2").click(),
-      onEnterBack: () => document.querySelector("#tab-link-2").click()
-    }),
-    ScrollTrigger.create({
-      trigger: "#tab-section-wrapper",
-      start: `${2 * getSectionHeight()} top`,
-      end: `${3 * getSectionHeight()} top`,
-      onEnter: () => document.querySelector("#tab-link-3").click(),
-      onEnterBack: () => document.querySelector("#tab-link-3").click()
-    })
-  ];
 
   // Listen for window resize to update triggers
   window.addEventListener('resize', updateTabTriggers);
-
-  // Set initial states for tab items including new items
-  gsap.set(["#tab-1-item-0", "#tab-1-item-1", "#tab-1-item-2", "#tab-2-item-0", "#tab-2-item-1", "#tab-2-item-2", "#tab-3-item-0", "#tab-3-item-1", "#tab-3-item-2"], 
-    { y: '100%', opacity: 0 });
-
-  // Function to animate items of a tab with updated delays
-  function animateTabItems(tabNum) {
-    gsap.to(`#tab-${tabNum}-item-0`, { y: 0, opacity: 1, duration: 0.5, delay: 0.9 });
-    gsap.to(`#tab-${tabNum}-item-1`, { y: 0, opacity: 1, duration: 0.5, delay: 1.1 });
-    gsap.to(`#tab-${tabNum}-item-2`, { y: 0, opacity: 1, duration: 0.5, delay: 1.3 });
-    // Animate line for the tab
-    gsap.fromTo(`#tab-${tabNum}-line`, { width: '0%' }, { width: '100%', duration: 0.5, delay: 0.9 });
-  }
-
-  // Trigger animations when each tab becomes visible
-  document.querySelector("#tab-link-1").addEventListener("click", () => animateTabItems(1));
-  document.querySelector("#tab-link-2").addEventListener("click", () => animateTabItems(2));
-  document.querySelector("#tab-link-3").addEventListener("click", () => animateTabItems(3));
-
-  gsap.utils.toArray(".title-wrapper").forEach(titleWrapper => {
-    gsap.set(titleWrapper.children, { y: 50, opacity: 0 });
-
-    ScrollTrigger.create({
-      trigger: titleWrapper,
-      start: "top center",
-      onEnter: () => {
-        gsap.to(titleWrapper.children, {
-          y: 0,
-          opacity: 1,
-          duration: 0.5,
-          stagger: 0.1
-        });
-      }
-    });
-  });
 
   // Call once to ensure correct initialization
   updateTabTriggers();
