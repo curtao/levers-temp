@@ -1,45 +1,5 @@
 
-// NAV SHOW HIDE 
 
-let lastScrollTop = 0;
-
-window.addEventListener("scroll", () => {
-  let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-  // Update navbar appearance based on hero section visibility
-  updateNavbarAppearance();
-
-  if (currentScroll > lastScrollTop) {
-    // Scrolling down
-    gsap.to("#nav", { y: -100, duration: 0.5 }); // Hides the nav bar
-  } else {
-    // Scrolling up
-    gsap.to("#nav", { y: 0, duration: 0.5 }); // Shows the nav bar
-  }
-  lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-}, false);
-
-function isHeroInView() {
-  const heroSection = document.querySelector("#hero-section");
-  if (!heroSection) return false;
-  const heroRect = heroSection.getBoundingClientRect();
-  return heroRect.bottom > 0;
-}
-
-function updateNavbarAppearance() {
-  const navbar = document.querySelector('#nav');
-  if (!navbar) return;
-
-  if (isHeroInView()) {
-    // Hero section is in view
-    navbar.style.backgroundColor = '#181715'; // Dark color
-    navbar.style.backdropFilter = 'none';
-  } else {
-    // Hero section is not in view
-    navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.5)'; // White with 50% opacity
-    navbar.style.backdropFilter = 'blur(10px)';
-  }
-}
 
 // GSAP and ScrollTrigger Registration (if needed)
 gsap.registerPlugin(ScrollTrigger);
